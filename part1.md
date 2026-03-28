@@ -60,12 +60,13 @@ Refactor the function `getDiscountedProductAveragePrice` to adhere to the Functi
 Write the new function under the name `getDiscountedProductAveragePriceFP`.
 
 Answer:
+```ts
 const getDiscountedProductAveragePriceFP = (inventory:Product[]) : number => inventory.filter((p : Product) : boolean => p.discounted).reduce((acc : number[], curr : Product) : number[] => {
   acc[0] = acc[0] + curr.price;
   acc[1] = acc[1] + 1;
   return acc;},[0,0]).reduce((acc :number,curr:number):number=>
   curr === 0 ? 0:acc/curr);
-
+```
 
 **Important**: the new function should have the same signature.
 
