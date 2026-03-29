@@ -1,4 +1,4 @@
-import { Result, makeFailure, makeOk, bind, either } from "./lib/result";
+import { Result, makeFailure, makeOk, bind, either, isOk } from "./lib/result";
 
 /* Library code */
 const findOrThrow = <T>(pred: (x: T) => boolean, a: T[]): T => {
@@ -8,7 +8,8 @@ const findOrThrow = <T>(pred: (x: T) => boolean, a: T[]): T => {
     throw "No element found.";
 }
 
-export const findResult = <T>(pred: (x: T) => boolean, a: T[]): Result<T> => undefined as any;
+export const findResult = <T>(pred: (x: T) => boolean, a: T[]): Result<T> => 
+    a.reduce((acc: Result<T>, curr: T):Result<T>=>pred(curr) ? bind(curr,(r:Result<T>):Result<T>=>isOk(acc)? acc:r):acc,makeFailure("No elements were found"));
 
 /* Client code */
 const returnSquaredIfFoundEven_v1 = (a: number[]): number => {
