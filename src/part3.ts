@@ -9,7 +9,8 @@ const findOrThrow = <T>(pred: (x: T) => boolean, a: T[]): T => {
 }
 
 export const findResult = <T>(pred: (x: T) => boolean, a: T[]): Result<T> => 
-    a.reduce((acc: Result<T>, curr: T):Result<T>=>pred(curr) ? bind(curr,(r:Result<T>):Result<T>=>isOk(acc)? acc:r):acc,makeFailure("No elements were found"));
+    a.reduce((acc: Result<T>, curr: T):Result<T>=>
+        isOk(acc)? acc:(pred(curr)? makeOk(curr):makeFailure("No elements found.")),makeFailure("No elements found."));
 
 /* Client code */
 const returnSquaredIfFoundEven_v1 = (a: number[]): number => {
@@ -21,6 +22,11 @@ const returnSquaredIfFoundEven_v1 = (a: number[]): number => {
     }
 }
 
-export const returnSquaredIfFoundEven_v2 = (a: number[]): Result<number> => undefined as any;
-export const returnSquaredIfFoundEven_v3 = (a: number[]): number => undefined as any;
+export const returnSquaredIfFoundEven_v2:(a:number[])=>Result<number> = (a: number[]): Result<number> => 
+    bind(findResult((x:number):boolean => x%2===0,a),(x:number):Result<number> => makeOk(x*x));
+
+
+export const returnSquaredIfFoundEven_v3 = (a: number[]): number => either(findResult((x:number):boolean => x%2===0,a)
+,(x:number):number => (x*x),
+(message:string):number =>-1);
 
