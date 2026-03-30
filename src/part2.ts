@@ -11,7 +11,7 @@ const vowelFilter : (element : string)=>boolean  = (element : string):boolean =>
 export const countVowels: (s: string) => number = (s:string):number => stringToArray(s.toLowerCase()).filter(vowelFilter).length;
 
 /* Question 2.2 */
-const isLetter :(s:string)=>boolean =(s:string):boolean => ((s >= "a" && s <="z") || (s>"0"&& s<="9"));
+const isLetter :(s:string)=>boolean =(s:string):boolean => ((s >= "a" && s <="z") || (s>="0"&& s<="9"));
 const polly = R.pipe((text:string):string=>text.toLowerCase(),stringToArray,(arr : string[]):string[]=>arr.filter(isLetter));
 
 export const isPalindrome:(text:string)=>boolean = (text:string):boolean =>{
